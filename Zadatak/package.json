@@ -16,6 +16,7 @@
     "postinstall": "quasar prepare"
   },
   "dependencies": {
+    "@capacitor/status-bar": "^8.0.0",
     "@quasar/extras": "^1.16.4",
     "axios": "^1.2.1",
     "quasar": "^2.18.6",

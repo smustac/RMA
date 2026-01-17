@@ -71,7 +71,7 @@ async function loginUser() {
 
   try {
     const response = await axios.post(
-      'http://localhost:3000/api/admin-login',
+      'http://10.0.2.2:3000/api/admin-login',
       {
         email: email.value,
         password: password.value

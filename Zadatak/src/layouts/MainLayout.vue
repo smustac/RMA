@@ -2,7 +2,7 @@
   <q-layout view="hHh lpR fFf" class="bg-layout">
 
     <!-- HEADER -->
-    <q-header elevated class="bg-primary text-white">
+    <q-header elevated class="bg-primary text-white header-big">
       <q-toolbar>
         <q-toolbar-title class="text-weight-bold">
           VelePark

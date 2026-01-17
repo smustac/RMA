@@ -1,0 +1,11 @@
+{
+  "appId": "com.stipe.zadatak",
+  "appName": "Quasar App",
+  "webDir": "www",
+  "plugins": {
+    "StatusBar": {
+      "overlaysWebView": false,
+      "backgroundColor": "#1976D2"
+    }
+  }
+}

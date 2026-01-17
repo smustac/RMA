@@ -2,7 +2,7 @@ import axios from 'axios'
 
 // Frontend uvijek razgovara s Express backendom (ne s MySQL portom).
 const api = axios.create({
-  baseURL: 'http://localhost:3000/api'
+  baseURL: 'http://10.0.2.2:3000/api'
 })
 
 // Headeri identiteta: ako postoji user u localStorage, šaljemo njegov id/role.
