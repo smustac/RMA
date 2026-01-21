@@ -81,7 +81,7 @@ const router = useRouter()
 
 async function loginUser() {
   if (!email.value || !password.value) {
-    message.value = 'Please fill in all fields'
+    message.value = 'Popunite sva polja'
     return
   }
 
@@ -98,8 +98,8 @@ async function loginUser() {
     router.push('/parking')
 
   } catch (err) {
-    console.error('Login error:', err)
-    message.value = err.response?.data?.message || 'Login failed'
+    console.error('Login greška:', err)
+    message.value = err.response?.data?.message || 'Login nije uspio'
   }
 }
 

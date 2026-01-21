@@ -65,7 +65,7 @@ const router = useRouter()
 
 async function loginUser() {
   if (!email.value || !password.value) {
-    alert('Please fill all fields')
+    alert('Popunite sva polja')
     return
   }
 
@@ -92,8 +92,8 @@ async function loginUser() {
     router.push('/adminpage')
 
   } catch (err) {
-    console.error('Login error:', err)
-    message.value = err.response?.data?.message || 'Login failed'
+    console.error('Login greška:', err)
+    message.value = err.response?.data?.message || 'Login neuspješan'
   }
 }
 
@@ -107,6 +107,9 @@ axios.interceptors.request.use(config => {
 })
 
 </script>
+
+
+//stvori onako prozirni login card
 <style scoped>
   .glass-card {
   width: 100%;

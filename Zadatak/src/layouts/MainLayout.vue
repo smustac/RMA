@@ -1,7 +1,7 @@
 <template>
   <q-layout view="hHh lpR fFf" class="bg-layout">
 
-    <!-- HEADER -->
+    
     <q-header elevated class="bg-primary text-white header-big">
       <q-toolbar>
         <q-toolbar-title class="text-weight-bold">
@@ -33,6 +33,7 @@
   min-height: 100vh;
 }
 
+/* spuštanje gornjeg boxa*/
 .page-wrapper {
   min-height: calc(100vh - 50px);
   display: flex;

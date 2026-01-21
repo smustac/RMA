@@ -6,7 +6,7 @@ import isAdmin from "../../middleware/isAdmin.js";
 const router = express.Router();
 
 
-router.use(auth);
+router.use(auth); //koristi za zaštitu ruta
 router.use(isAdmin);
 
 

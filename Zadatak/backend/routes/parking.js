@@ -37,30 +37,30 @@ router.post('/:id/occupy', async (req, res) => {
   const userId = req.user?.id
   const role = req.user?.role || 'student'
 
-  // Ako netko pokuša bez user_id (npr. stari x-guest-id fallback), ne možemo upisati FK
+  // Ako netko pokuša bez user_id, ne možemo upisati FK
   if (!userId || isNaN(Number(userId))) {
     return res.status(401).json({ message: 'Niste prijavljeni (gost se mora kreirati kroz Gost ulaz)' })
   }
 
   try {
-    // Spot postoji?
+    // Spot postoji
     const [spotRows] = await pool.query('SELECT * FROM parking_spots WHERE id = ?', [spotId])
     if (spotRows.length === 0) return res.status(404).json({ message: 'Mjesto ne postoji' })
     const spot = spotRows[0]
 
-    // Prava: VIP i invalid samo za odgovarajuću ulogu.
-    // Gost se smatra guest rolom, pa nema pravo na vip/invalid.
+    // Prava: VIP i invalid samo za odgovarajuću ulogu
+    // Gost se smatra guest rolom, pa nema pravo na vip/invalid
     if (spot.type === 'vip' && role !== 'vip') return res.status(403).json({ message: 'Nemate pravo na VIP mjesto' })
     if (spot.type === 'invalid' && role !== 'invalid') return res.status(403).json({ message: 'Nemate pravo na invalid mjesto' })
 
-    // Je li mjesto zauzeto?
+    // Je li mjesto zauzeto
     const [busy] = await pool.query(
       'SELECT 1 FROM parking WHERE parking_id = ? AND released_at IS NULL LIMIT 1',
       [spotId]
     )
     if (busy.length) return res.status(400).json({ message: 'Mjesto je već zauzeto' })
 
-    // Ima li user već aktivno parkiranje?
+    // Ima li user već aktivno parkiranje
     const [active] = await pool.query(
       'SELECT 1 FROM parking WHERE user_id = ? AND released_at IS NULL LIMIT 1',
       [Number(userId)]
@@ -81,6 +81,7 @@ router.post('/:id/occupy', async (req, res) => {
 
 
 // POST /api/parking/:id/release
+// oznaka odlaska sa mjesta
 router.post('/:id/release', async (req, res) => {
   const spotId = Number(req.params.id)
   const userId = req.user?.id

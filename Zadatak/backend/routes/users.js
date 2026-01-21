@@ -36,9 +36,9 @@ router.delete("/:id", adminAuth, async (req, res) => {
   try {
     const [result] = await pool.query("DELETE FROM users WHERE id = ?", [id]);
     if (result.affectedRows === 0) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: "Korisnik nije pronaden" });
     }
-    res.json({ message: "User deleted successfully" });
+    res.json({ message: "Korisnik uspješno pobrisan" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -49,15 +49,15 @@ router.put('/:id/role', adminAuth, async (req, res) => {
   const { id } = req.params;
   const { role } = req.body;
 
-  if (!role) return res.status(400).json({ message: 'Role is required' });
+  if (!role) return res.status(400).json({ message: 'Potreban je status' });
 
   try {
     const [result] = await pool.query('UPDATE users SET role = ? WHERE id = ?', [role, id]);
     if (result.affectedRows === 0) return res.status(404).json({ message: 'User not found' });
-    res.json({ message: 'Role updated successfully' });
+    res.json({ message: 'Uspješno promjenjen status' });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Failed to update role' });
+    res.status(500).json({ message: 'Neuspjela promjena statusa' });
   }
 });
 

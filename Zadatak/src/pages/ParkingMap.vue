@@ -53,21 +53,21 @@ export default {
 </script>
 
 <style scoped>
-/* Card look for your glass theme */
+
 .glass-card {
   background: rgba(255, 255, 255, 0.12);
   backdrop-filter: blur(12px);
   border-radius: 18px;
 }
 
-/* Real responsive grid */
+
 .parking-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 12px;
 }
 
-/* Small tablets / large phones */
+
 @media (min-width: 420px) {
   .parking-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -75,7 +75,7 @@ export default {
   }
 }
 
-/* Tablets */
+
 @media (min-width: 900px) {
   .parking-grid {
     grid-template-columns: repeat(3, 1fr);

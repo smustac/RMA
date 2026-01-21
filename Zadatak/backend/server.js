@@ -24,14 +24,14 @@ const pool = mysql.createPool({
 
 app.post('/api/register', async (req, res) => { 
   const { username, email, password, role } = req.body
-  console.log('Register request body:', req.body)
+  console.log('Registracija request body:', req.body)
 
   if (!username || !email || !password) {
-    return res.status(400).json({ message: 'All fields are required' })
+    return res.status(400).json({ message: 'Sva polja potrebna' })
   }
 
   try {
-    // Check duplicates
+    //provjeravamo duplikate
     const [existing] = await pool.query(
       'SELECT id FROM users WHERE username = ? OR email = ?',
       [username, email]
@@ -40,19 +40,19 @@ app.post('/api/register', async (req, res) => {
       return res.status(409).json({ message: 'Username or email already exists' })
     }
 
-    // Hash password
+    //haširanje lozinke
     const hashedPassword = await bcrypt.hash(password, 10)
 
-    // Insert user with role
+    //umetanje u bazu
     await pool.query(
       'INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)',
       [username, email, hashedPassword, role]
     )
 
-    res.status(201).json({ message: 'User registered successfully' })
+    res.status(201).json({ message: 'Korisnik uspješno registriran' })
   } catch (err) {
-    console.error('Registration error:', err)
-    res.status(500).json({ message: 'Registration failed' })
+    console.error('Greška pri registraciji:', err)
+    res.status(500).json({ message: 'Neuspjela registracija' })
   }
 })
 
@@ -63,23 +63,23 @@ app.post('/api/login', async (req, res) => {
   console.log('Login request body:', req.body)
 
   if (!email || !password) {
-    return res.status(400).json({ message: 'All fields are required' })
+    return res.status(400).json({ message: 'Sva polja su obavezna' })
   }
 
   try {
     const [rows] = await pool.query('SELECT * FROM users WHERE email = ?', [email])
     if (rows.length === 0) {
-      return res.status(401).json({ message: 'Invalid email or password' })
+      return res.status(401).json({ message: 'Nevažeći email ili lozinka' })
     }
 
     const user = rows[0]
     const passwordMatch = await bcrypt.compare(password, user.password)
     if (!passwordMatch) {
-      return res.status(401).json({ message: 'Invalid email or password' })
+      return res.status(401).json({ message: 'Nevažeći email ili lozinka' })
     }
 
     res.json({
-      message: 'Login successful',
+      message: 'Login uspješan',
       user: {
         id: user.id,
         username: user.username,
@@ -89,8 +89,8 @@ app.post('/api/login', async (req, res) => {
       }
     })
   } catch (err) {
-    console.error('Login error:', err)
-    res.status(500).json({ message: 'Login failed' })
+    console.error('Login greška:', err)
+    res.status(500).json({ message: 'Login greška' })
   }
 }) 
 
@@ -101,21 +101,21 @@ app.post('/api/admin-login', async (req, res) => {
   console.log('Admin login request body:', req.body);
 
   if (!email || !password) {
-    return res.status(400).json({ message: 'All fields are required' });
+    return res.status(400).json({ message: 'Sva polja su obavezna' });
   }
 
   try {
     const [rows] = await pool.query('SELECT * FROM admins WHERE email = ?', [email]);
 
     if (rows.length === 0) {
-      return res.status(401).json({ message: 'Invalid email or password' });
+      return res.status(401).json({ message: 'Nevažeći email ili lozinka' });
     }
 
     const admin = rows[0];
     const passwordMatch = await bcrypt.compare(password, admin.password);
 
     if (!passwordMatch) {
-      return res.status(401).json({ message: 'Invalid email or password' });
+      return res.status(401).json({ message: 'Nevažeći email ili lozinka' });
     }
 
     // stvori token
@@ -144,12 +144,12 @@ app.get('/api/users',adminAuth, async (req, res) => {
     const [rows] = await pool.query('SELECT id, username, email, role FROM users'); 
     res.json(rows);
   } catch (err) {
-    console.error('Error fetching users:', err);
-    res.status(500).json({ message: 'Failed to fetch users' });
+    console.error('Greška pri dohvaćanju korisnika:', err);
+    res.status(500).json({ message: 'Neuspjelo dohvaćanje korisnika' });
   }
 });
 
-// DELETE a user by ID
+// Brisanje usera 
 app.delete('/api/users/:id',adminAuth, async (req, res) => {
   const { id } = req.params
   try {
@@ -164,7 +164,7 @@ app.delete('/api/users/:id',adminAuth, async (req, res) => {
   }
 })
 
-// Update user role
+// Update statusa
 
 app.put('/api/users/:id/role',adminAuth, async (req, res) => {
   const { id } = req.params

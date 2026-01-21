@@ -28,7 +28,7 @@
           :rows-per-page-options="[5, 10, 20]"
           :grid="$q.screen.lt.sm"
         >
-          <!-- Desktop/tablet: keep dropdown + delete in table cells -->
+          <!-- dropdown meni -->
           <template v-if="!$q.screen.lt.sm" v-slot:body-cell-role="props">
             <q-td :props="props" align="center">
               <q-select
@@ -61,7 +61,7 @@
             </q-td>
           </template>
 
-          <!-- Mobile: card layout (grid) -->
+          <!-- layout posložen za mobitel -->
           <template v-slot:item="props">
             <div class="q-pa-sm col-12">
               <q-card bordered class="user-card">
@@ -157,12 +157,12 @@ async function confirmDelete (userId) {
     await axios.delete(`http://10.0.2.2:3000/api/users/${userId}`)
     users.value = users.value.filter(u => u.id !== userId)
   } catch (err) {
-    console.error('Failed to delete user:', err)
+    console.error('Neuspješno brisanje korisnika:', err)
   }
 }
 
 async function confirmRoleChange (userId, newRole) {
-  if (!window.confirm(`Change role to "${newRole}"?`)) {
+  if (!window.confirm(`Promjeniti ulogu u "${newRole}"?`)) {
     await fetchUsers()
     return
   }
@@ -172,7 +172,7 @@ async function confirmRoleChange (userId, newRole) {
       role: newRole
     })
   } catch (err) {
-    console.error('Failed to update role:', err)
+    console.error('Neuspješna promjena statusa:', err)
     await fetchUsers()
   }
 }
